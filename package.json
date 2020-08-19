@@ -3,15 +3,23 @@
   "version": "1.0.0",
   "description": "A terminal app to view the latest ASX stock prices.",
   "main": "index.js",
-  "author": "Matthew Hartman <matthewhartmanau@gmail.com>",
-  "license": "ISC",
+  "bin": {
+    "asx": "./index.js"
+  },
   "dependencies": {
     "chalk": "^4.1.0",
     "cheerio": "^1.0.0-rc.3",
     "columnify": "^1.5.4",
     "yargs": "^15.4.1"
   },
-  "bin": {
-    "asx": "./index.js"
-  }
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/matthewhartman/asxticker.git"
+  },
+  "author": "Matthew Hartman <matthewhartmanau@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/matthewhartman/asxticker/issues"
+  },
+  "homepage": "https://github.com/matthewhartman/asxticker#readme"
 }
