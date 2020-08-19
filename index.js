@@ -35,16 +35,16 @@ https.get(`https://www.asx.com.au/asx/markets/equityPrices.do?by=asxCodes&asxCod
         const change = column[2].charAt(0);
         if (index !== 0) {
           results.push({
-            code: column[0],
-            last: column[1],
-            '$+/-': (change === '-' && index !== 0) ? chalk.red(column[2]) : chalk.green(column[2]),
-            '% chg': column[3],
-            bid: column[4],
-            offer: column[5],
-            open: column[6],
-            high: column[7],
-            low: column[8],
-            volume: column[9]
+            code: chalk.bgHex('#333').hex('#fff').bold(column[0]),
+            last: chalk.hex('#fff')(column[1]),
+            '$+/-': (change === '-' && index !== 0) ? chalk.hex('#e88388').bold(column[2]) : chalk.hex('#a8cc8b').bold(column[2]),
+            '% chg': (change === '-' && index !== 0) ? chalk.hex('#e88388').bold(column[3]) : chalk.hex('#a8cc8b').bold(column[3]),
+            bid: chalk.hex('#fff')(column[4]),
+            offer: chalk.hex('#fff')(column[5]),
+            open: chalk.hex('#fff')(column[6]),
+            high: chalk.hex('#fff')(column[7]),
+            low: chalk.hex('#fff')(column[8]),
+            volume: chalk.hex('#fff')(column[9])
           });
         }
       });
