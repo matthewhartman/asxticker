@@ -11,6 +11,10 @@
   "dependencies": {
     "chalk": "^4.1.0",
     "cheerio": "^1.0.0-rc.3",
-    "tab": "^1.0.0"
+    "columnify": "^1.5.4",
+    "yargs": "^15.4.1"
+  },
+  "bin": {
+    "asx": "./index.js"
   }
 }
