@@ -18,6 +18,11 @@
   },
   "author": "Matthew Hartman <matthewhartmanau@gmail.com>",
   "license": "MIT",
+  "keywords": [
+    "asx",
+    "stock ticker",
+    "sharemarket"
+  ],
   "bugs": {
     "url": "https://github.com/matthewhartman/asxticker/issues"
   },

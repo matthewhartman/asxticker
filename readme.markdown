@@ -15,9 +15,7 @@ Once installed you can run the following commands:
 ```bash
 # query single stock
 asx -c CBA
-```
 
-```bash
 # query multiple stocks
 asx -c CBA,REA,APT
 ```
