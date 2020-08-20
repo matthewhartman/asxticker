@@ -1,33 +1,38 @@
 #!/usr/bin/env node
 'use strict';
 
-const https = require('https');
+const fetch = require('node-fetch');
 const cheerio = require('cheerio');
 const chalk = require('chalk');
-
 const yargs = require('yargs');
 const columnify = require('columnify');
 
+const divider = '--------------------------------------------------------------------------------------------------------------';
+
 const options = yargs
 .default('c', 'CSL,CBA,BHP,WBC,NAB,FMG,WES,ANZ,WOW,MQG,RIO,TCL,TLS,GMG,NCM', 'Show all ASX codes')
-.usage('Usage: -a <code>')
-.option('a', { alias: 'all', describe: 'Show all ASX codes', type: 'string', demandOption: false })
 .usage('Usage: -c <code>')
-.option('c', { alias: 'code', describe: 'ASX code (eg: BEN or multiple codes BEN,CBA,ATP)', type: 'string', demandOption: true })
+.option('c', { alias: 'code', describe: 'ASX code (eg: BEN or multiple codes BEN,CBA,ATP)', type: 'string', demandOption: false })
 .argv;
 
-const code = `${options.code}`.replace(/,/g, '+');
+let code = `${options.code}`.split(',');
+
+let codes = [], size = 10;
+    
+while (code.length > 0) {
+  codes.push(code.splice(0, size));
+}
+
+let results = [];
+
 console.clear();
 
-https.get(`https://www.asx.com.au/asx/markets/equityPrices.do?by=asxCodes&asxCodes=${code}`, (response) => {
-  response.setEncoding('utf8');
-  let rawData = '';
-  response.on('data', (chunk) => { rawData += chunk; });
-  response.on('end', () => {
-    try {
-      const parsedData = rawData;
-      const $ = cheerio.load(parsedData);
-      let results = []
+function getData(asxCodes) {
+  return new Promise((resolve, reject) => {
+    const response = fetch(`https://www.asx.com.au/asx/markets/equityPrices.do?by=asxCodes&asxCodes=${asxCodes}`)
+    .then(response => response.text())
+    .then(body => {
+      const $ = cheerio.load(body);
       // regex - https://stackoverflow.com/a/33823632
       $('.datatable tr').each((index, element) => {
         const row = $(element).text().trim().replace('*', '').replace(/\s+/g, '| ');
@@ -48,22 +53,39 @@ https.get(`https://www.asx.com.au/asx/markets/equityPrices.do?by=asxCodes&asxCod
           });
         }
       });
-      const options = { truncate: true, config: {
-        code: { minWidth: 10 },
-        last: { minWidth: 10 },
-        '$+/-': { minWidth: 10 },
-        '% chg': { minWidth: 10 },
-        bid: { minWidth: 10 },
-        offer: { minWidth: 10 },
-        open: { minWidth: 10 },
-        high: { minWidth: 10 },
-        low: { minWidth: 10 },
-        volume: { minWidth: 10 },
-      }}
-      const columns = columnify(results, options)
-      console.log(columns)
-    } catch (e) {
-    console.error(e.message);
-    }
+      resolve(results);
+    })
   })
-})
+}
+
+const getAllData = async () => {
+  return Promise.all(codes.map(codes => {
+    const asxCodes = codes.toString().replace(/,/g, '+');
+    return getData(asxCodes)
+  }))
+}
+
+getAllData().then((val) => {
+  const tableOptions = {
+    truncate: true,
+    config: {
+      code: { minWidth: 10 },
+      last: { minWidth: 10 },
+      '$+/-': { minWidth: 10 },
+      '% chg': { minWidth: 10 },
+      bid: { minWidth: 10 },
+      offer: { minWidth: 10 },
+      open: { minWidth: 10 },
+      high: { minWidth: 10 },
+      low: { minWidth: 10 },
+      volume: { minWidth: 10 },
+    }
+  }
+  const columns = columnify(results, tableOptions);
+  console.log(chalk.hex('#fff').bold(`\n$$$ ASX Ticker $$$`));
+  console.log(divider);
+  if (results.length) {
+    console.log(columns);
+    console.log(`${divider}\n* prices are delayed up to 20 minutes\n`);
+  }
+});
