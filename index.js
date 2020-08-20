@@ -10,7 +10,7 @@ const columnify = require('columnify');
 const divider = '--------------------------------------------------------------------------------------------------------------';
 
 const options = yargs
-.default('c', 'CSL,CBA,BHP,WBC,NAB,FMG,WES,ANZ,WOW,MQG,RIO,TCL,TLS,GMG,NCM', 'Show all ASX codes')
+.default('c', 'AMC,ANZ,BHP,BXB,CBA,CSL,GMG,IAG,MQG,NAB,NCM,RIO,SCG,SUN,TLS,TCL,WES,WBC,WPL,WOW', 'Show top 20 ASX codes')
 .usage('Usage: -c <code>')
 .option('c', { alias: 'code', describe: 'ASX code (eg: BEN or multiple codes BEN,CBA,ATP)', type: 'string', demandOption: false })
 .argv;
@@ -18,7 +18,7 @@ const options = yargs
 let code = `${options.code}`.split(',');
 
 let codes = [], size = 10;
-    
+
 while (code.length > 0) {
   codes.push(code.splice(0, size));
 }

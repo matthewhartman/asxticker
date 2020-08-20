@@ -13,16 +13,17 @@ Simply run `npm i -g asxticker` to install asxticker globally.
 Once installed you can run the following commands:
 
 ```bash
-# query single stock
+# show top 20 asx stocks
+asx
+
+# query single asx stock
 asx -c CBA
 
-# query multiple stocks
+# query multiple asx stocks
 asx -c CBA,REA,APT
 ```
 
 ## TODO
 
-* [x] Chunk stocks in groups of 10s for multiple
-* [ ] Make default `asx` return all stocks from ASX
 * [ ] Clean up code and add some unit tests
 
