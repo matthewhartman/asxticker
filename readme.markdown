@@ -22,6 +22,7 @@ asx -c CBA,REA,APT
 
 ## TODO
 
-* [ ] Chunk stocks in groups of 10s for multiple
+* [x] Chunk stocks in groups of 10s for multiple
+* [ ] Make default `asx` return all stocks from ASX
 * [ ] Clean up code and add some unit tests
 
