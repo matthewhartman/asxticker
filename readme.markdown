@@ -4,7 +4,7 @@ A terminal app to view the latest ASX stock prices.
 
 ## Demo
 
-![Alt text](demo.png?raw=true "Demo")
+![Alt text](demo.gif?raw=true "Demo")
 
 ## Installation
 
