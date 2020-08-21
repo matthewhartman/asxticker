@@ -1,6 +1,6 @@
 {
   "name": "asxticker",
-  "version": "1.2.2",
+  "version": "1.2.3",
   "description": "A terminal app to view the latest ASX stock prices.",
   "main": "index.js",
   "bin": {
