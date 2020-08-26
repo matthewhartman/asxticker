@@ -25,8 +25,6 @@ while (code.length > 0) {
 
 let results = [];
 
-console.clear();
-
 function getData(asxCodes) {
   return new Promise((resolve, reject) => {
     const response = fetch(`https://www.asx.com.au/asx/markets/equityPrices.do?by=asxCodes&asxCodes=${asxCodes}`)
@@ -82,10 +80,8 @@ getAllData().then((val) => {
     }
   }
   const columns = columnify(results, tableOptions);
-  console.log(chalk.hex('#fff').bold(`\n$$$ ASX Ticker $$$`));
-  console.log(divider);
+  console.log(chalk.hex('#fff').bold(`\n$$$ ASX Ticker $$$\n${divider}`));
   if (results.length) {
-    console.log(columns);
-    console.log(`${divider}\n* prices are delayed up to 20 minutes\n`);
+    console.log(`${columns}\n${divider}\n* prices are delayed up to 20 minutes\n`);
   }
 });
