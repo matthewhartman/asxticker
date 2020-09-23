@@ -17,13 +17,8 @@ Once installed you can run the following commands:
 asx
 
 # query single asx stock
-asx -c CBA
+asx -c cba
 
 # query multiple asx stocks
-asx -c CBA,REA,APT
+asx -c cba,rea,apt
 ```
-
-## TODO
-
-* [ ] Clean up code and add some unit tests
-
