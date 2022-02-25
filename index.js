@@ -25,17 +25,17 @@ async function getAllData() {
       const dataJson = await data.json();
       const dailyData = await fetch(`https://asx.api.markitdigital.com/asx-research/1.0/derivatives/equity/${asxCode}/options`);
       const dailyDataJson = await dailyData.json();
-      const change = dataJson.data ? dataJson.data.priceChange.toString().charAt(0) : '';
+      const change = dataJson.data ? dataJson.data.priceChange ? dataJson.data.priceChange.toString().charAt(0) : '' : '';
       results.push({
         code: chalk.bgHex('#333').hex('#fff').bold(dataJson.data ? (dataJson.data.symbol).toUpperCase() : (asxCode.substring(0,3)).toUpperCase()),
         last: chalk.hex('#fff')(dataJson.data ? dataJson.data.priceLast.toFixed(3) : '-'),
-        'chg $': (change === '-') ? chalk.hex('#e88388').bold(dataJson.data ? dataJson.data.priceChange.toFixed(3) : '-') : dataJson.data ? chalk.hex('#a8cc8b').bold(dataJson.data.priceChange.toFixed(3)) : '-',
-        'chg %': (change === '-') ? chalk.hex('#e88388').bold(dataJson.data ? dataJson.data.priceChangePercent.toFixed(3) : '-') : dataJson.data ? chalk.hex('#a8cc8b').bold(dataJson.data.priceChangePercent.toFixed(3)) : '-',
-        bid: chalk.hex('#fff')(dataJson.data ? dataJson.data.priceBid.toFixed(3) : '-'),
-        offer: chalk.hex('#fff')(dataJson.data ? dataJson.data.priceAsk.toFixed(3) : '-'),
-        'day high': chalk.hex('#fff')(dailyDataJson.data ? dailyDataJson.data.underlyingAsset.priceDayHigh.toFixed(3): '-'),
-        'day low': chalk.hex('#fff')(dailyDataJson.data ? dailyDataJson.data.underlyingAsset.priceDayLow.toFixed(3) : '-'),
-        volume: chalk.hex('#fff')(dataJson.data ? new Intl.NumberFormat().format(dataJson.data.volume) : '-')
+        'chg $': (change === '-') ? chalk.hex('#e88388').bold(dataJson.data ? dataJson.data.priceChange ? dataJson.data.priceChange.toFixed(3) : '-' : '-') : dataJson.data ? dataJson.data.priceChange ? chalk.hex('#a8cc8b').bold(dataJson.data.priceChange.toFixed(3)) : '-' : '-',
+        'chg %': (change === '-') ? chalk.hex('#e88388').bold(dataJson.data ? dataJson.data.priceChangePercent ? dataJson.data.priceChangePercent.toFixed(3) : '-' : '-') : dataJson.data ? dataJson.data.priceChangePercent ? chalk.hex('#a8cc8b').bold(dataJson.data.priceChangePercent.toFixed(3)) : '-' : '-',
+        bid: chalk.hex('#fff')(dataJson.data ? dataJson.data.priceBid ? dataJson.data.priceBid.toFixed(3) : '-' : '-'),
+        offer: chalk.hex('#fff')(dataJson.data ? dataJson.data.priceAsk ? dataJson.data.priceAsk.toFixed(3) : '-' : '-'),
+        'day high': chalk.hex('#fff')(dailyDataJson.data ? dailyDataJson.data.underlyingAsset.priceDayHigh ? dailyDataJson.data.underlyingAsset.priceDayHigh.toFixed(3) : '-' : '-'),
+        'day low': chalk.hex('#fff')(dailyDataJson.data ? dailyDataJson.data.underlyingAsset.priceDayLow ? dailyDataJson.data.underlyingAsset.priceDayLow.toFixed(3) : '-' : '-'),
+        volume: chalk.hex('#fff')(dataJson.data ? dataJson.data.volume ? new Intl.NumberFormat().format(dataJson.data.volume) : '-' : '-')
       });
     })
   ).then(() => {
